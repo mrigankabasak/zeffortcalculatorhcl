@@ -1,0 +1,490 @@
+<mvc:View controllerName="com.zeffortcalculatorhcl.controller.HCLDetail"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:m="sap.ui.table"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<Page id="page" title="Deal History" showNavButton="false" titleAlignment="Center"
+		navButtonPress="onNavBack">
+		<content>
+			<core:Fragment fragmentName="com.zeffortcalculatorhcl.view.fragment.HCL" type="XML" />
+			<l:Grid defaultSpan="L12 M7 S12" width="auto">
+				<l:content>
+					<VBox class="sapUiSmallMargin" width="auto">
+					<f:SimpleForm  layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" visible="true">
+						<f:content>
+							<Label text="Customer ID" design="Bold"/>
+							<Text text="{oModelEstCal>/CustId}" />
+							<Label text="Customer Name" design="Bold"/>
+							<Text text="{oModelEstCal>/CustName}" />
+							<Label text="Opportunity Name" design="Bold"/>
+							<Text text="{oModelEstCal>/OppName}" />
+							<Label text="Work Package" design="Bold"/>
+							<Text text="{ path: 'oModelEstCal>/OppType', formatter: '.formatter.getWorkpackage' }" />
+							<Label text="Opportunity ID" design="Bold"/>
+							<Text text="{oModelEstCal>/OpportunityId}" />
+							<Label text="Version" design="Bold"/>
+							<Text text="{oModelEstCal>/Version}" />
+							<Label text="Estimator Size" design="Bold"/>
+							<Text text="{ path: 'oModelEstCal>/SystemSize', formatter: '.formatter.getSystemSize' }" />
+							<Label text="Price" design="Bold"/>
+							<Text text="{oModelEstCal>/SrvcCst} {oModelEstCal>/Currency}" />
+							<Label text="Cycle" design="Bold"/>
+							<Text text="{path:'oModelEstCal>/NoOfCycles', type:'sap.ui.model.odata.type.Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:13,scale:2}}"  />
+							<Label text="Duration Weeks" design="Bold"/>
+							<Text text="{oModelEstCal>/DurWeeks}" />
+							<Label text="Created By" design="Bold"/>
+							<Text text="{oModelEstCal>/CreatedBy}" />
+						</f:content>
+					</f:SimpleForm>
+					</VBox>
+				</l:content>
+			</l:Grid>
+			<IconTabBar class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter text="Inputs">
+						<VBox class="sapUiSmallMargin" width="auto">
+							<f:SimpleForm editable="false" layout="ColumnLayout" title="Inputs" columnsM="2" columnsL="3" columnsXL="4" width="auto">
+								<f:content>
+									<Label text="Source System DB Size" design="Bold"/>
+									<Text text="{oModelEstCal>/SsDbSize} TB" />
+									<Label text="No. of Cycles" design="Bold" />
+									<Text text="{path:'oModelEstCal>/NoOfCycles', type:'sap.ui.model.odata.type.Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:13,scale:2}}"  />
+									<Label text="High Complexity Functional Module" design="Bold" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }" />
+									<Text text="{oModelEstCal>/HighComplexFm}" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }" />
+									<Label text="Medium Complexity Functional Module" design="Bold" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }" />
+									<Text text="{oModelEstCal>/MedComplexFm}" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }" />
+									<Label text="Simple Complexity Functional Module" design="Bold" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }" />
+									<Text text="{oModelEstCal>/SimComplexFm}" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }" />
+									<Label text="ATC Violation Count" design="Bold" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Text text="{oModelEstCal>/AtcViolCount}" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Label text="Fiori Standard Apps Count" design="Bold" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Text text="{oModelEstCal>/FioriStdAppCount}" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Label text="Fiori Security Cataloug Roles" design="Bold" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Text text="{oModelEstCal>/FioriSecCatRole}" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Label text="Security Master Roles" design="Bold" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Text text="{oModelEstCal>/SecMasterRole}" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Label text="Interface Count" design="Bold" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+									<Text text="{oModelEstCal>/InterfaceCount}" visible="{ path: 'oModelEstCal>/OppType', formatter:'.formatter.getFVisible' }"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+					</IconTabFilter>
+					<IconTabFilter text="Effort Calculation">
+						<VBox  class="">
+							<Table	inset="true"  alternateRowColors="true" id="hclPriceCal" items="{oModelEstCal>/to_PlatformEffort/results}" >
+								<headerToolbar>
+									<OverflowToolbar>
+										<content>
+											<Title text="Pricing Calculator" level="H2"/>
+											<ToolbarSpacer />
+											<RadioButtonGroup  columns="2" visible="{pgUiData>/enableTableData}">
+												<RadioButton  id="rb-H" text="Person Hours" selected="true" />
+												<RadioButton  id="rb-M" text="Person Months" select="onChangeHoursorMonths" />
+											</RadioButtonGroup>
+											<Label text="Resource View" />
+											<Switch type="AcceptReject"  change=".onSwitchChange"  />
+										
+										</content>
+									</OverflowToolbar>
+								</headerToolbar>
+								<columns>
+									<Column >
+										<Label design="Bold" text="Effort Calculator"  />
+									</Column>
+									<Column hAlign="Center">
+										<Label design="Bold" text="Total Effort ({= ${pgUiData>/hoursOrMonth} === 'M' ? 'In Days' : 'In Hours' })" />
+										
+									</Column>
+									<Column	minScreenWidth="Desktop" demandPopin="true"	hAlign="Center" visible="{pgUiData>/enableTableData}">
+										<Label design="Bold" text="L4" />
+									</Column>
+									<Column	minScreenWidth="Desktop" demandPopin="true"	hAlign="Center" visible="{pgUiData>/enableTableData}">
+										<Label design="Bold" text="L3" />
+									</Column>
+									<Column	minScreenWidth="Desktop" demandPopin="true"	hAlign="Center" visible="{pgUiData>/enableTableData}">
+										<Label design="Bold" text="L2" />
+									</Column>
+									<Column	minScreenWidth="Desktop" demandPopin="true"	hAlign="Center" visible="{pgUiData>/enableTableData}">
+										<Label design="Bold" text="L1" />
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem vAlign="Middle" >
+										<cells>
+											<Text text="{oModelEstCal>EffType}"/>
+											<Text text="{= ${pgUiData>/hoursOrMonth} === 'M' ? ${oModelEstCal>TotEffD} : ${oModelEstCal>TotEffH} }" />
+											<!-- <Text text="{= ${pgUiData>/hoursOrMonth} === 'M' ? ${path:'oModelEstCal>TotEffD', type: 'sap.ui.model.type.Integer'	} : ${oModelEstCal>TotEffH}    }" /> -->
+											<Text text="{= ${pgUiData>/hoursOrMonth} === 'M' ? ${oModelEstCal>L4ManMnth} : ${oModelEstCal>L4ManHr} }" visible="true"/>
+											<Text text="{= ${pgUiData>/hoursOrMonth} === 'M' ? ${oModelEstCal>L3ManMnth} : ${oModelEstCal>L3ManHr} }" visible="true"/>
+											<Text text="{= ${pgUiData>/hoursOrMonth} === 'M' ? ${oModelEstCal>L2ManMnth} : ${oModelEstCal>L2ManHr} }" visible="true" />
+											<Text text="{= ${pgUiData>/hoursOrMonth} === 'M' ? ${oModelEstCal>L1ManMnth} : ${oModelEstCal>L1ManHr} }" visible="true" />
+											
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</VBox>
+					</IconTabFilter>
+					<IconTabFilter text="Platform Efforts" >
+						<VBox  class="">
+							<Table	inset="true" alternateRowColors="true" items="{oModelEstCal>/to_PlatformEffortHD/results}">
+								<headerToolbar>
+									<OverflowToolbar>
+										<content>
+											<Title text="Platform Efforts" level="H2"/>
+											<ToolbarSpacer />
+										</content>
+									</OverflowToolbar>
+								</headerToolbar>
+								<columns>
+									<Column>
+										<Label design="Bold" text="Effort Calculator"  />
+									</Column>
+									<Column hAlign="Center">
+										<Label design="Bold" text="Total Effort (In Hours)" />
+									</Column>
+									<Column hAlign="Center">
+										<Label design="Bold" text="Total Effort (In Days)" />
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem vAlign="Middle">
+										<cells>
+											<Text text="{oModelEstCal>EffType}" />
+											<Text text="{path: 'oModelEstCal>TotEffortInHours', formatter: '.formatter.convertTwoDecimal' }" />											
+											<!-- <Text text="{path:'oModelEstCal>TotEffortInDays', type: 'sap.ui.model.type.Integer'	}" textAlign="Right" /> -->
+											<Text text="{path: 'oModelEstCal>TotEffortInDays', formatter: '.formatter.MathRound' }" textAlign="Right" />
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</VBox>
+					</IconTabFilter>					
+					<IconTabFilter text="{ path: 'oModelEstCal>/OppType', formatter: '.formatter.getWorkpackage' }">
+						<VBox  class="">
+							<Table inset="true" items="{oModelEstCal>/to_ResourceEff/results}" alternateRowColors="true">
+								<headerToolbar>
+									<OverflowToolbar>
+										<content>
+											<Title text="{i18n>tabtitle}" level="H2"/>
+											<ToolbarSpacer />
+										</content>
+									</OverflowToolbar>
+								</headerToolbar>
+								<columns>
+									
+									<Column hAlign="Begin" width="7rem" >
+										<Label design="Bold" text="Skill"  />
+									</Column>
+									<Column hAlign="Center" >
+										<Label design="Bold" text="Level"   />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 1"   />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 2"  />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 3" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 4" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 5" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 6" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 7" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 8" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 9" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 10" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 11" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Month 12" />
+									</Column>
+									<Column hAlign="End" >
+										<Label design="Bold" text="Sum" />
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem >
+										<cells>
+											
+											<Text text="{path: 'oModelEstCal>EffType'}" />
+											<Text text="{path: 'oModelEstCal>EcLevel'}" />
+											<Text text="{path: 'oModelEstCal>Ec1', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec2', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec3', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec4', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec5', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec6', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec7', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec8', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec9', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec10', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec11', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>Ec12', formatter: '.formatter.convertTwoDecimal' }" />
+											<Text text="{path: 'oModelEstCal>EcSum', formatter: '.formatter.convertTwoDecimal' }" class="bldTxtChld" />
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</VBox>
+					</IconTabFilter>
+					<IconTabFilter text="Work Package Additional Details">
+						<VBox  class="">
+							<m:Table id="table1" ariaLabelledBy="title"  selectionMode="None" rows="{oModelEstCal>/to_TotalEffort/results}"
+								enableColumnFreeze="true" showColumnVisibilityMenu="true">
+								<m:extension>
+									<OverflowToolbar style="Clear">
+										<Title id="title" text="{ path: 'oModelEstCal>/OppType', formatter: '.formatter.getWorkpackage' }"/>
+									</OverflowToolbar>
+								</m:extension>
+								<m:columns>
+									<m:Column
+										width="11rem"
+										sortProperty="modules"
+										filterProperty="modules" >
+										<Label text="" textAlign="Center" width="100%"/>
+										<m:template>
+											<Text text="{ path: 'oModelEstCal>EffType' }"/>
+										</m:template>
+									</m:Column>
+									<!-- Column:Execution:L3/L2 -->
+									<m:Column
+											width="6rem"
+											sortProperty="street"
+											filterProperty="street"
+											headerSpan="3"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Execution: L3/L2" textAlign="Begin" width="100%"/>
+											<Label text="Small" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{ path: 'oModelEstCal>SExeEff', formatter: '.formatter.convertTwoDecimal' }" wrapping="false"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="city"
+											headerSpan="1"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Execution: L3/L2"/>
+											<Label text="Medium" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>MExeEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="phone"
+											headerSpan="2"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Execution: L3/L2"/>
+											<Label text="Large" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>LExeEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+									<!-- Column:Coverage L4 Effort -->
+									<m:Column
+											width="6rem"
+											sortProperty="street"
+											filterProperty="street"
+											headerSpan="3"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Coverage L4 Effort" textAlign="Begin" width="100%"/>
+											<Label text="Small" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>SCovEff', formatter: '.formatter.convertTwoDecimal'}" wrapping="false"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="city"
+											headerSpan="1"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Coverage L4 Effort"/>
+											<Label text="Medium" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>MCovEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="phone"
+											headerSpan="2"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Coverage L4 Effort"/>
+											<Label text="Large" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>LCovEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+									<!-- Column:Hyper Care Effort L2 -->
+									<m:Column
+											width="6rem"
+											sortProperty="street"
+											filterProperty="street"
+											headerSpan="3"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Hyper Care Effort L2" textAlign="Begin" width="100%"/>
+											<Label text="Small" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>SHyperCareEff', formatter: '.formatter.convertTwoDecimal'}" wrapping="false"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="city"
+											headerSpan="1"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Hyper Care Effort L2"/>
+											<Label text="Medium" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>MHyperCareEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="phone"
+											headerSpan="2"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Hyper Care Effort L2"/>
+											<Label text="Large" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>LHyperCareEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+									<!-- Column:governance -->
+									<m:Column
+											width="6rem"
+											sortProperty="street"
+											filterProperty="street"
+											headerSpan="3"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Governance" textAlign="Begin" width="100%"/>
+											<Label text="Small" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>SGovEff', formatter: '.formatter.convertTwoDecimal'}" wrapping="false"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="city"
+											headerSpan="1"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Governance"/>
+											<Label text="Medium" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>MGovEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="phone"
+											headerSpan="2"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="Governance"/>
+											<Label text="Large" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>LGovEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+									<!-- Column:Total -->
+									<m:Column
+											width="6rem"
+											sortProperty="street"
+											filterProperty="street"
+											headerSpan="3"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="TOTAL" textAlign="Begin" width="100%"/>
+											<Label text="Small" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>STotEff', formatter: '.formatter.convertTwoDecimal'}" wrapping="false"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="city"
+											headerSpan="1"
+											hAlign="End">
+										<m:multiLabels>
+											<Label text="TOTAL"/>
+											<Label text="Medium" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>MTotEff', formatter: '.formatter.convertTwoDecimal'}" textAlign="Right"/>
+										</m:template>
+									</m:Column>
+									<m:Column
+											width="6rem"
+											sortProperty="phone"
+											headerSpan="2"
+											hAlign="End" >
+										<m:multiLabels>
+											<Label text="TOTAL"/>
+											<Label text="Large" textAlign="Begin" width="100%"/>
+										</m:multiLabels>
+										<m:template>
+											<Text text="{path: 'oModelEstCal>LTotEff', formatter: '.formatter.convertTwoDecimal'}"/>
+										</m:template>
+									</m:Column>
+								</m:columns>
+							</m:Table>
+						</VBox>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+		<footer>
+			<Toolbar  tooltip="Select action required">
+				<ToolbarSpacer  />
+				<!-- <Button id="detailSave" type="Emphasized" icon="sap-icon://save" text="Save" class="sapUiSmallMarginBegin" press=".onSave('S')"/>		 -->
+				<Button id="detailEdit" type="Emphasized" icon="" text="Edit" press=".onEdit('E')"/>
+				<Button id="detailSearch" type="Emphasized" icon="sap-icon://search" text="Search" press=".onSearchCust" />
+				<Button id="detailHome" type="Neutral" icon="sap-icon://home" text="Home Page" class="sapUiSmallMarginBegin" press="onHome"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>
