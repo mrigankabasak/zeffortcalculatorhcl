@@ -16,8 +16,10 @@ sap.ui.define([
 			_onObjectFetched: function () {
 				this.getView().loaded().then(() => {
 					this.getOwnerModel("pgUiData").setProperty("/showBaseLines", false);
-					if (this.getOwnerModel("oModelEstCal").getProperty("/SsDbSize"))
+					if (this.getOwnerModel("oModelEstCal").getProperty("/SsDbSize")){
 						this.getView().byId("SsDbSize").fireChange({ value: this.getOwnerModel("oModelEstCal").getProperty("/SsDbSize") });
+						this.getOwnerModel("oModelEstCal").setProperty("/SaveOrEdit", "");
+					}
 
 				});
 
@@ -133,7 +135,13 @@ sap.ui.define([
 				let sProperties = ["NoOfCycles", "HighComplexFm", "MedComplexFm", "SimComplexFm", "AtcViolCount", "FioriStdAppCount", "FioriSecCatRole", "SecMasterRole", "InterfaceCount"];
 				let ooModelSelectedBaseLine = this.getOwnerModel("oModelSelectedBaseLine").getData();
 
-				if (this.getOwnerModel("oModelEstCal").getProperty("/NoOfCycles") == "" || this.getOwnerModel("oModelEstCal").getProperty("/NoOfCycles") == null) {
+				// if (this.getOwnerModel("oModelEstCal").getProperty("/NoOfCycles") == "" || this.getOwnerModel("oModelEstCal").getProperty("/NoOfCycles") == null) {
+				// 	sProperties.forEach((sProperty) => {
+				// 		this.getOwnerModel("oModelEstCal").setProperty("/" + sProperty, +ooModelSelectedBaseLine[sProperty]);
+				// 	});
+				// }
+
+				if (this.getOwnerModel("oModelEstCal").getProperty("/SaveOrEdit") != "E") {
 					sProperties.forEach((sProperty) => {
 						this.getOwnerModel("oModelEstCal").setProperty("/" + sProperty, +ooModelSelectedBaseLine[sProperty]);
 					});
@@ -223,6 +231,7 @@ sap.ui.define([
 				oInputs.setProperty("/SecMasterRole", "");
 				oInputs.setProperty("/InterfaceCount", "");
 				oInputs.setProperty("/Comments", "");
+				oInputs.setProperty("/SaveOrEdit", "");
 				this.getOwnerModel("pgUiData").setProperty("/showBaseLines", false);
 			},
 
