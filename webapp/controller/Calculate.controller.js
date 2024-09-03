@@ -1,15 +1,16 @@
 sap.ui.define([
 	"./BaseController",
+	"sap/ui/core/library",
 	"../utils/formatter",
 	"sap/m/MessageBox"
 ],
-	function (BaseController, formatter, MessageBox) {
+	function (BaseController, CoreLib, formatter, MessageBox) {
 		"use strict";
-
+		const { UIComponent, ValueState, BusyIndicator } = CoreLib;
 		return BaseController.extend("com.zeffortcalculatorhcl.controller.Calculate", {
 			formatter: formatter,
 			onInit: function () {
-				var router = sap.ui.core.UIComponent.getRouterFor(this);
+				var router = UIComponent.getRouterFor(this);
 				router.getRoute("Calculate").attachPatternMatched(this._onObjectFetched, this);
 			},
 
@@ -77,14 +78,14 @@ sap.ui.define([
 				let ooModelSelectedBaseLine = this.getOwnerModel("oModelSelectedBaseLine").getData()[sProperty];
 				let oRangeData = this.getOwnerModel("rangeData").getData()[sProperty];
 				let nValue = sProperty != "NoOfCycles" ? +oEvent.getSource().getValue() : oEvent.getSource().getValue();
-				oEvent.getSource().setValueState(sap.ui.core.ValueState.None);
+				oEvent.getSource().setValueState(ValueState.None);
 				if (nValue < 0) {
 					oEvent.getSource().setValue();
 					return;
 				}
 
 				if (!((+ooModelSelectedBaseLine - oRangeData <= nValue) && (nValue <= +ooModelSelectedBaseLine + oRangeData))) {
-					oEvent.getSource().setValueState(sap.ui.core.ValueState.Error);
+					oEvent.getSource().setValueState(ValueState.Error);
 					this.getOwnerModel("pgUiData").setProperty("/errors", true);
 				}
 				else this.getOwnerModel("pgUiData").setProperty("/errors", false);
@@ -95,7 +96,7 @@ sap.ui.define([
 				let sSourceDB = parseFloat(oEvent.getSource().getValue());
 				let alBaseLineModel = this.getOwnerModel("oModelBaseLineDataSet").getData();
 				if (sSourceDB) {
-					oEvent.getSource().setValueState(sap.ui.core.ValueState.None);
+					oEvent.getSource().setValueState(ValueState.None);
 					oEvent.getSource().setValueStateText("");
 					this.getOwnerModel("pgUiData").setProperty("/errors", false);
 					this.getOwnerModel("pgUiData").setProperty("/showBaseLines", true);
@@ -109,7 +110,7 @@ sap.ui.define([
 						this.getOwnerModel("oModelEstCal").setProperty("/SystemSize", "L");
 					} else {
 						this.getOwnerModel("oModelEstCal").setProperty("/SystemSize", "");
-						oEvent.getSource().setValueState(sap.ui.core.ValueState.Error);
+						oEvent.getSource().setValueState(ValueState.Error);
 						oEvent.getSource().setValueStateText("Maximum size 10 TB");
 						this.getOwnerModel("pgUiData").setProperty("/errors", true);
 						this.getOwnerModel("pgUiData").setProperty("/showBaseLines", false);
@@ -117,7 +118,7 @@ sap.ui.define([
 
 				}
 				else {
-					oEvent.getSource().setValueState(sap.ui.core.ValueState.Error);
+					oEvent.getSource().setValueState(ValueState.Error);
 					oEvent.getSource().setValueStateText("System Size cannot be 0");
 					this.getOwnerModel("pgUiData").setProperty("/errors", true);
 				}
@@ -172,12 +173,12 @@ sap.ui.define([
 				delete oData.to_ResourceEff;
 				delete oData.to_TotalEffort;
 
-				sap.ui.core.BusyIndicator.show();
+				BusyIndicator.show();
 
 				let oCalculateData = this.callBackEnd("/zi_hcl_header", "POST", [], oData);
 				oCalculateData.then((oResponse) => {
 					console.log(oResponse);
-					sap.ui.core.BusyIndicator.hide();
+					BusyIndicator.hide();
 					let result = oResponse.data;
 					this.getOwnerModel("oModelEstCal").setData(null);
 					//result.NoOfCycles = parseFloat(result.NoOfCycles).toFixed(2);
@@ -203,7 +204,7 @@ sap.ui.define([
 					});
 
 				}).catch((error) => {
-					sap.ui.core.BusyIndicator.hide();
+					BusyIndicator.hide();
 					console.log(error);
 				});
 
@@ -247,14 +248,14 @@ sap.ui.define([
 				let sProperties = ["NoOfCycles", "HighComplexFm", "MedComplexFm", "SimComplexFm", "AtcViolCount", "FioriStdAppCount", "FioriSecCatRole", "SecMasterRole", "InterfaceCount"];
 				let errors = 0;
 				sProperties.forEach((sProperty) => {
-					this.getView().byId(sProperty).setValueState(sap.ui.core.ValueState.None);
+					this.getView().byId(sProperty).setValueState(ValueState.None);
 					if (this.getView().byId(sProperty).getValue()) {
 						if (!((+ooModelSelectedBaseLine[sProperty] - oRangeData[sProperty] <= +this.getView().byId(sProperty).getValue()) && (+this.getView().byId(sProperty).getValue() <= +ooModelSelectedBaseLine[sProperty] + oRangeData[sProperty]))) {
-							this.getView().byId(sProperty).setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId(sProperty).setValueState(ValueState.Error);
 							errors += 1;
 						}
 					} else {
-						this.getView().byId(sProperty).setValueState(sap.ui.core.ValueState.Error);
+						this.getView().byId(sProperty).setValueState(ValueState.Error);
 						errors += 1;
 					}
 

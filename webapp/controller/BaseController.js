@@ -1,12 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
+	"sap/ui/core/library",
 	"sap/ui/core/routing/History",
-	"sap/ui/export/library",
 	"../utils/formatter",
-	"sap/ui/export/Spreadsheet"
-], function (Controller, History, exportLibrary, formatter, Spreadshee) {
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
+], function (Controller, CoreLib, History, formatter, Filter, FilterOperator) {
 	"use strict";
-	let EdmType = exportLibrary.EdmType;
+	const { BusyIndicator } = CoreLib;
 	return Controller.extend("com.zeffortcalculatorhcl.controller.BaseController", {
 		formatter: formatter,
 		getRouter: function () {
@@ -36,9 +37,9 @@ sap.ui.define([
 		},
 
 		createFilter: function (path, value) {
-			return new sap.ui.model.Filter({
+			return new Filter({
 				path: path,
-				operator: sap.ui.model.FilterOperator.EQ,
+				operator: FilterOperator.EQ,
 				value1: value
 			});
 		},
@@ -95,7 +96,7 @@ sap.ui.define([
 				this.createFilter("OpportunityId", oEvent.getParameter("arguments").OpportunityId),
 				this.createFilter("Version", oEvent.getParameter("arguments").Version)
 				];
-				sap.ui.core.BusyIndicator.show();
+				BusyIndicator.show();
 				let oDetailData = this.callBackEnd("/zi_hcl_header", "GET", filters, {}, { $expand: "to_TotalEffort,to_PlatformEffort,to_PlatformEffortHD,to_ResourceEff" });
 
 				oDetailData.then((oResponse) => {
@@ -115,9 +116,9 @@ sap.ui.define([
 						ele.TotEffH = formatter.convertTwoDecimal(ele.TotEffH.trim());
 					});
 					this.getOwnerModel("oModelEstCal").setData(response.results[0]);
-					sap.ui.core.BusyIndicator.hide();
+					BusyIndicator.hide();
 				}).catch((error) => {
-					sap.ui.core.BusyIndicator.hide();
+					BusyIndicator.hide();
 					console.log(error);
 				});
 			}

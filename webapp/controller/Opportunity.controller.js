@@ -1,11 +1,12 @@
 sap.ui.define([
     "./BaseController",
+    "sap/ui/core/library",
     "sap/m/MessageBox",
     "com/zeffortcalculatorhcl/model/models",
 ],
-    function (BaseController, MessageBox, models) {
+    function (BaseController, CoreLib, MessageBox, models) {
         "use strict";
-
+        const { BusyIndicator } = CoreLib;
         return BaseController.extend("com.zeffortcalculatorhcl.controller.Opportunity", {
             onInit: function () {
                   this.getView().addEventDelegate({
@@ -41,7 +42,7 @@ sap.ui.define([
                     aFilter.push(this.createFilter("CustName", oJsData.CustName));
                     aFilter.push(this.createFilter("OppName", oJsData.OppName));
                     
-                    sap.ui.core.BusyIndicator.show();
+                    BusyIndicator.show();
                     let oResponse = this.callBackEnd("/zi_hcl_opp_custom", "GET", aFilter, {}, {});
                     //let oResponse = this.callBackEnd("/zi_hcl_opp_custom", "POST", [], oJsData);
                     oResponse.then((oResponse) => {
@@ -50,7 +51,7 @@ sap.ui.define([
                         this.getOwnerModel("oModelEstCal").setProperty("/OpportunityId", result.OpportunityId);
                         this.getOwnerModel("oModelEstCal").setProperty("/Version", result.Version);
 
-                        sap.ui.core.BusyIndicator.hide();
+                        BusyIndicator.hide();
                         
                             MessageBox.information("Opportunity ID " + result.OpportunityId + " has been created for future reference", {    
                             actions: [MessageBox.Action.OK],
@@ -62,8 +63,8 @@ sap.ui.define([
                         });
 
                     }).catch((error) => {
-                        sap.m.MessageBox.success( JSON.stringify(error));
-                        sap.ui.core.BusyIndicator.hide();
+                        MessageBox.success( JSON.stringify(error));
+                        BusyIndicator.hide();
                     });
 
                 }else{
