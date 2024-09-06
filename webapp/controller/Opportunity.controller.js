@@ -43,11 +43,11 @@ sap.ui.define([
                     aFilter.push(this.createFilter("OppName", oJsData.OppName));
                     
                     BusyIndicator.show();
-                    let oResponse = this.callBackEnd("/zi_hcl_opp_custom", "GET", aFilter, {}, {});
-                    //let oResponse = this.callBackEnd("/zi_hcl_opp_custom", "POST", [], oJsData);
+                    // let oResponse = this.callBackEnd("/zi_hcl_opp_custom", "GET", aFilter, {}, {});
+                    let oResponse = this.callBackEnd("/zi_hcl_opp_custom", "POST", [], oJsData);
                     oResponse.then((oResponse) => {
-                        let result = oResponse.data.results[0];
-                        //let result = oResponse.data.results;
+                        //let result = oResponse.data.results[0];
+                        let result = oResponse.data;
                         this.getOwnerModel("oModelEstCal").setProperty("/OpportunityId", result.OpportunityId);
                         this.getOwnerModel("oModelEstCal").setProperty("/Version", result.Version);
 
@@ -63,7 +63,7 @@ sap.ui.define([
                         });
 
                     }).catch((error) => {
-                        MessageBox.success( JSON.stringify(error));
+                        MessageBox.error( JSON.stringify(error));
                         BusyIndicator.hide();
                     });
 
