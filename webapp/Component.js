@@ -36,7 +36,7 @@ sap.ui.define([
 
                 // set pgUiData model
                 let oModel = new JSONModel();
-                oModel.setData({ "enableTableData": false, "errors": false, "showBaseLines": true, "hoursOrMonth": "M" });
+                oModel.setData({ "loggedInUser" : "" , "loggedInUserEmail": "", "loggedInUserName": "" , "enableTableData": false, "errors": false, "showBaseLines": true, "hoursOrMonth": "M" });
                 // ** hoursOrMonth used for swicth between Hours or Month Resource view. By Defualt setting the parameter to M-Month. on change of radio button set H-Hours, and vice versa (HCL detailpage)
                 this.setModel(oModel, "pgUiData");
 
@@ -57,6 +57,16 @@ sap.ui.define([
                         }
                     });
                 });
+
+                let oUserModel = new JSONModel();
+                const url = this.getManifestObject()._oBaseUri._parts.path + "user-api/attributes";
+                oUserModel.loadData(url);
+                oUserModel.dataLoaded().then(() => {
+                        this.getModel("pgUiData").setProperty("/loggedInUser", oUserModel.getData().hasOwnProperty("sub") ? oUserModel.getData().sub[0] : "");
+                        this.getModel("pgUiData").setProperty("/loggedInUserEmail", oUserModel.getData().hasOwnProperty("email") ? oUserModel.getData().email : "" );
+                        this.getModel("pgUiData").setProperty("/loggedInUserName", oUserModel.getData().firstname + " "+ oUserModel.getData().lastname);
+                    })
+                    .catch(() => {});
 
             },
 

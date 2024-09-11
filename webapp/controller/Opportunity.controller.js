@@ -9,15 +9,15 @@ sap.ui.define([
         const { BusyIndicator } = CoreLib;
         return BaseController.extend("com.zeffortcalculatorhcl.controller.Opportunity", {
             onInit: function () {
-                  this.getView().addEventDelegate({
-                    onBeforeShow: ()=>{
+                this.getView().addEventDelegate({
+                    onBeforeShow: () => {
                         // Clearing the Global Input Model and the radio buttons
                         this.getOwnerModel("oModelEstCal").destroy();
-			            this.setOwnerModel(models.getEcInputModel(this.getOwnerModel()), "oModelEstCal");
+                        this.setOwnerModel(models.getEcInputModel(this.getOwnerModel()), "oModelEstCal");
                         this.getView().byId("radio_L").setSelected(false);
                         this.getView().byId("radio_U").setSelected(false);
                         this.getView().byId("radio_C").setSelected(false);
-                    }   
+                    }
                 });
             },
             onWorkpackage: function (oEvent, value) {
@@ -26,7 +26,7 @@ sap.ui.define([
                 }
             },
 
-            onOpportunitysubmit: function () {             
+            onOpportunitysubmit: function () {
                 let oJsData = {
                     "CustId": this.getOwnerModel("oModelEstCal").getProperty("/CustId"),
                     "OppType": this.getOwnerModel("oModelEstCal").getProperty("/OppType"),
@@ -35,25 +35,26 @@ sap.ui.define([
                 };
 
                 if (oJsData.CustId && oJsData.CustName && oJsData.OppName && oJsData.OppType) {
-                        
-                    let aFilter = [];
-                    aFilter.push(this.createFilter("CustId", oJsData.CustId));
-                    aFilter.push(this.createFilter("OppType", oJsData.OppType));
-                    aFilter.push(this.createFilter("CustName", oJsData.CustName));
-                    aFilter.push(this.createFilter("OppName", oJsData.OppName));
-                    
                     BusyIndicator.show();
-                    // let oResponse = this.callBackEnd("/zi_hcl_opp_custom", "GET", aFilter, {}, {});
                     let oResponse = this.callBackEnd("/zi_hcl_opp_custom", "POST", [], oJsData);
                     oResponse.then((oResponse) => {
-                        //let result = oResponse.data.results[0];
                         let result = oResponse.data;
                         this.getOwnerModel("oModelEstCal").setProperty("/OpportunityId", result.OpportunityId);
                         this.getOwnerModel("oModelEstCal").setProperty("/Version", result.Version);
-
                         BusyIndicator.hide();
-                        
-                            MessageBox.information("Opportunity ID " + result.OpportunityId + " has been created for future reference", {    
+
+                        if (JSON.parse(oResponse.headers['sap-message'])?.severity == "error") {
+                            MessageBox.error(JSON.parse(oResponse.headers['sap-message']).message, {
+                                actions: [MessageBox.Action.OK],
+                                emphasizedAction: MessageBox.Action.OK,
+                                onClose: () => {
+                                    return;
+                                }
+                            });
+                            return;
+                        }
+
+                        MessageBox.information("Opportunity ID " + result.OpportunityId + " has been created for future reference", {
                             actions: [MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: () => {
@@ -63,13 +64,24 @@ sap.ui.define([
                         });
 
                     }).catch((error) => {
-                        MessageBox.error( JSON.stringify(error));
+                        MessageBox.error(JSON.stringify(error));
                         BusyIndicator.hide();
                     });
 
-                }else{
+                } else {
                     MessageBox.error("Please enter all the required fields");
                 }
+
+                //  TEST Email
+                // let oResponse2 = this.callBackEnd("/zi_hcl_email", "GET", [], {}, {});
+                // oResponse2.then((oResponse) => {
+                //     //let result = oResponse.data;
+                //     BusyIndicator.hide();
+
+                // }).catch((error) => {
+                //     MessageBox.error(JSON.stringify(error));
+                //     BusyIndicator.hide();
+                // });
 
             },
         });
