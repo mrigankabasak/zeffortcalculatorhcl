@@ -44,13 +44,7 @@ sap.ui.define([
                         BusyIndicator.hide();
 
                         if (JSON.parse(oResponse.headers['sap-message'])?.severity == "error") {
-                            MessageBox.error(JSON.parse(oResponse.headers['sap-message']).message, {
-                                actions: [MessageBox.Action.OK],
-                                emphasizedAction: MessageBox.Action.OK,
-                                onClose: () => {
-                                    return;
-                                }
-                            });
+                            MessageBox.error(JSON.parse(oResponse.headers['sap-message']).message);
                             return;
                         }
 

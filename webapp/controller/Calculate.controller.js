@@ -17,7 +17,7 @@ sap.ui.define([
 			_onObjectFetched: function () {
 				this.getView().loaded().then(() => {
 					this.getOwnerModel("pgUiData").setProperty("/showBaseLines", false);
-					if (this.getOwnerModel("oModelEstCal").getProperty("/SsDbSize")){
+					if (this.getOwnerModel("oModelEstCal").getProperty("/SsDbSize")) {
 						this.getView().byId("SsDbSize").fireChange({ value: this.getOwnerModel("oModelEstCal").getProperty("/SsDbSize") });
 						this.getOwnerModel("oModelEstCal").setProperty("/SaveOrEdit", "");
 					}
@@ -65,8 +65,8 @@ sap.ui.define([
 				MessageBox.information(
 					`The difference between entered value and baseline value should be less than or equal to the range value. \n
 					 Entered value(${sEnteredValue}) - Baseline(${sBaseValue}) <= Range value(${sRangeValue})
-					 ${sType}`					
-					) ;
+					 ${sType}`
+				);
 
 			},
 			checkwithBaseLine: function (oEvent, sProperty) {
@@ -179,6 +179,12 @@ sap.ui.define([
 				oCalculateData.then((oResponse) => {
 					console.log(oResponse);
 					BusyIndicator.hide();
+
+					if (JSON.parse(oResponse.headers['sap-message'])?.severity == "error") {
+						MessageBox.information(JSON.parse(oResponse.headers['sap-message']).message);
+						return;
+					}
+
 					let result = oResponse.data;
 					this.getOwnerModel("oModelEstCal").setData(null);
 					//result.NoOfCycles = parseFloat(result.NoOfCycles).toFixed(2);
@@ -195,8 +201,8 @@ sap.ui.define([
 						onClose: () => {
 							//this.getRouter().navTo("Detail", {}, false);
 							this.getRouter().navTo("Detail", {
-								CustId: result.CustId.trim() ,
-								OpportunityId: result.OpportunityId.trim() ,
+								CustId: result.CustId.trim(),
+								OpportunityId: result.OpportunityId.trim(),
 								Version: result.Version.trim()
 							}, false);
 							return;
@@ -217,7 +223,7 @@ sap.ui.define([
 					oEvent.getSource().setValue(+sSourceDB.slice(0, -1));
 					return;
 				}
-			},		
+			},
 
 			onReset: function () {
 				let oInputs = this.getOwnerModel("oModelEstCal");
