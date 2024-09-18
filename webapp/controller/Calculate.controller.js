@@ -195,6 +195,21 @@ sap.ui.define([
 						return;
 					}
 
+					//  Send Email
+					// let oJsData = {
+					// 	"SentToUser": this.getOwnerModel("pgUiData").getProperty("/loggedInUser"),
+					// 	"UserEmail": this.getOwnerModel("pgUiData").getProperty("/loggedInUserEmail"),
+					// 	"SentFlag": 'x'
+					// };
+					// let oSendEmail = this.callBackEnd("/zi_hcl_email", "POST", [], oJsData , {});
+					// oSendEmail.then((oResponse) => {
+					//     //let result = oResponse.data;
+
+					// }).catch((error) => {
+					//     MessageBox.error(JSON.stringify(error));
+					//     BusyIndicator.hide();
+					// });
+
 					MessageBox.success("Successfully Saved", {
 						actions: [MessageBox.Action.OK],
 						emphasizedAction: MessageBox.Action.OK,
