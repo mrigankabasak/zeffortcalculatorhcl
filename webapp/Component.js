@@ -14,6 +14,7 @@ sap.ui.define([
 
         return UIComponent.extend("com.zeffortcalculatorhcl.Component", {
             metadata: {
+                interfaces: ["sap.ui.core.IAsyncContentCreation"],
                 manifest: "json"
             },
 
