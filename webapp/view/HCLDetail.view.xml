@@ -249,222 +249,154 @@
 					<IconTabFilter text="Work Package Additional Details">
 						<VBox  class="">
 							<m:Table id="table1" ariaLabelledBy="title"  selectionMode="None" rows="{oModelEstCal>/to_TotalEffort/results}"
-								enableColumnFreeze="true" showColumnVisibilityMenu="true">
+								enableColumnFreeze="false">
 								<m:extension>
 									<OverflowToolbar style="Clear">
 										<Title id="title" text="{ path: 'oModelEstCal>/OppType', formatter: '.formatter.getWorkpackage' }"/>
 									</OverflowToolbar>
 								</m:extension>
 								<m:columns>
-									<m:Column
-										width="11rem"
-										sortProperty="modules"
-										filterProperty="modules" >
+									<m:Column>
 										<Label text="" textAlign="Center" width="100%"/>
 										<m:template>
 											<Text text="{ path: 'oModelEstCal>EffType' }"/>
 										</m:template>
 									</m:Column>
 									<!-- Column:Execution:L3/L2 -->
-									<m:Column
-											width="6rem"
-											sortProperty="street"
-											filterProperty="street"
-											headerSpan="3"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="Execution: L3/L2" textAlign="Begin" width="100%"/>
-											<Label text="Small" textAlign="Begin" width="100%"/>
+											<Label text="Execution: L3/L2" textAlign="Center"/>
+											<Label text="Small" textAlign="Begin" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{ path: 'oModelEstCal>SExeEff', formatter: '.formatter.convertTwoDecimal' }" wrapping="false"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="city"
-											headerSpan="1"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }" >
 										<m:multiLabels>
-											<Label text="Execution: L3/L2"/>
-											<Label text="Medium" textAlign="Begin" width="100%"/>
+											<Label text="Execution: L3/L2" textAlign="Center" />
+											<Label text="Medium" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>MExeEff', formatter: '.formatter.convertTwoDecimal'}"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="phone"
-											headerSpan="2"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }" >
 										<m:multiLabels>
-											<Label text="Execution: L3/L2"/>
-											<Label text="Large" textAlign="Begin" width="100%"/>
+											<Label text="Execution: L3/L2" textAlign="Center"/>
+											<Label text="Large" textAlign="Center"/>
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>LExeEff', formatter: '.formatter.convertTwoDecimal'}"/>
 										</m:template>
 									</m:Column>
 									<!-- Column:Coverage L4 Effort -->
-									<m:Column
-											width="6rem"
-											sortProperty="street"
-											filterProperty="street"
-											headerSpan="3"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="Coverage L4 Effort" textAlign="Begin" width="100%"/>
-											<Label text="Small" textAlign="Begin" width="100%"/>
+											<Label text="Coverage L4 Effort" textAlign="Center"/>
+											<Label text="Small" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>SCovEff', formatter: '.formatter.convertTwoDecimal'}" wrapping="false"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="city"
-											headerSpan="1"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }">
 										<m:multiLabels>
 											<Label text="Coverage L4 Effort"/>
-											<Label text="Medium" textAlign="Begin" width="100%"/>
+											<Label text="Medium" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>MCovEff', formatter: '.formatter.convertTwoDecimal'}"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="phone"
-											headerSpan="2"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }">
 										<m:multiLabels>
 											<Label text="Coverage L4 Effort"/>
-											<Label text="Large" textAlign="Begin" width="100%"/>
+											<Label text="Large" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>LCovEff', formatter: '.formatter.convertTwoDecimal'}"/>
 										</m:template>
 									</m:Column>
 									<!-- Column:Hyper Care Effort L2 -->
-									<m:Column
-											width="6rem"
-											sortProperty="street"
-											filterProperty="street"
-											headerSpan="3"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="Hyper Care Effort L2" textAlign="Begin" width="100%"/>
-											<Label text="Small" textAlign="Begin" width="100%"/>
+											<Label text="Hyper Care Effort L2" textAlign="Center" />
+											<Label text="Small" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>SHyperCareEff', formatter: '.formatter.convertTwoDecimal'}" wrapping="false"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="city"
-											headerSpan="1"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }">
 										<m:multiLabels>
 											<Label text="Hyper Care Effort L2"/>
-											<Label text="Medium" textAlign="Begin" width="100%"/>
+											<Label text="Medium" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>MHyperCareEff', formatter: '.formatter.convertTwoDecimal'}"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="phone"
-											headerSpan="2"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }">
 										<m:multiLabels>
 											<Label text="Hyper Care Effort L2"/>
-											<Label text="Large" textAlign="Begin" width="100%"/>
+											<Label text="Large" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>LHyperCareEff', formatter: '.formatter.convertTwoDecimal'}"/>
 										</m:template>
 									</m:Column>
 									<!-- Column:governance -->
-									<m:Column
-											width="6rem"
-											sortProperty="street"
-											filterProperty="street"
-											headerSpan="3"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="Governance" textAlign="Begin" width="100%"/>
-											<Label text="Small" textAlign="Begin" width="100%"/>
+											<Label text="Governance" textAlign="Center" />
+											<Label text="Small" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>SGovEff', formatter: '.formatter.convertTwoDecimal'}" wrapping="false"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="city"
-											headerSpan="1"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }">
 										<m:multiLabels>
 											<Label text="Governance"/>
-											<Label text="Medium" textAlign="Begin" width="100%"/>
+											<Label text="Medium" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>MGovEff', formatter: '.formatter.convertTwoDecimal'}"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="phone"
-											headerSpan="2"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }">
 										<m:multiLabels>
 											<Label text="Governance"/>
-											<Label text="Large" textAlign="Begin" width="100%"/>
+											<Label text="Large" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>LGovEff', formatter: '.formatter.convertTwoDecimal'}"/>
 										</m:template>
 									</m:Column>
 									<!-- Column:Total -->
-									<m:Column
-											width="6rem"
-											sortProperty="street"
-											filterProperty="street"
-											headerSpan="3"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="TOTAL" textAlign="Begin" width="100%"/>
-											<Label text="Small" textAlign="Begin" width="100%"/>
+											<Label text="TOTAL" textAlign="Center"/>
+											<Label text="Small" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>STotEff', formatter: '.formatter.convertTwoDecimal'}" wrapping="false"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="city"
-											headerSpan="1"
-											hAlign="End">
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }">
 										<m:multiLabels>
 											<Label text="TOTAL"/>
-											<Label text="Medium" width="100%"/>
+											<Label text="Medium" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>MTotEff', formatter: '.formatter.convertTwoDecimal'}" textAlign="Right"/>
 										</m:template>
 									</m:Column>
-									<m:Column
-											width="6rem"
-											sortProperty="phone"
-											headerSpan="2"
-											hAlign="End" >
+									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }">
 										<m:multiLabels>
 											<Label text="TOTAL"/>
-											<Label text="Large" textAlign="Begin" width="100%"/>
+											<Label text="Large" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
 											<Text text="{path: 'oModelEstCal>LTotEff', formatter: '.formatter.convertTwoDecimal'}"/>
