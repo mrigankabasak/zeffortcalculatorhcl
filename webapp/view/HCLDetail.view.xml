@@ -72,16 +72,16 @@
 						</VBox>
 					</IconTabFilter>
 					<IconTabFilter text="Effort Calculation">
-						<VBox  class="">
+						<VBox>
 							<Table	inset="true"  alternateRowColors="true" id="hclPriceCal" items="{oModelEstCal>/to_PlatformEffort/results}" >
-								<headerToolbar>
-									<OverflowToolbar>
-										<content>
-											<Title text="Pricing Calculator" level="H2"/>
+								<headerToolbar >
+									<OverflowToolbar >
+										<content >
+											<Title text="Pricing Calculator" level="H2" wrapping="true"/>
 											<ToolbarSpacer />
 											<RadioButtonGroup  columns="2" visible="{pgUiData>/enableTableData}">
-												<RadioButton  id="rb-H" text="Person Hours" selected="true" />
-												<RadioButton  id="rb-M" text="Person Months" select="onChangeHoursorMonths" />
+												<RadioButton  id="rb-H" text="Person Hours" selected="true" class="rbH"  />
+												<RadioButton  id="rb-M" text="Person Months" select="onChangeHoursorMonths" class="rbM"/>
 											</RadioButtonGroup>
 											<Label text="Resource View" />
 											<Switch type="AcceptReject"  change=".onSwitchChange"  />
@@ -133,20 +133,20 @@
 								<headerToolbar>
 									<OverflowToolbar>
 										<content>
-											<Title text="Platform Efforts" level="H2"/>
+											<Title text="Platform Efforts" level="H2" wrapping="true"/>
 											<ToolbarSpacer />
 										</content>
 									</OverflowToolbar>
 								</headerToolbar>
 								<columns>
 									<Column>
-										<Label design="Bold" text="Effort Calculator"  />
+										<Label design="Bold" text="Effort Calculator" wrapping="true" />
 									</Column>
 									<Column hAlign="Center">
-										<Label design="Bold" text="Total Effort (In Hours)" />
+										<Label design="Bold" text="Total Effort (In Hours)" wrapping="true"/>
 									</Column>
 									<Column hAlign="Center">
-										<Label design="Bold" text="Total Effort (In Days)" />
+										<Label design="Bold" text="Total Effort (In Days)" wrapping="true"/>
 									</Column>
 								</columns>
 								<items>
@@ -163,8 +163,108 @@
 						</VBox>
 					</IconTabFilter>					
 					<IconTabFilter text="{ path: 'oModelEstCal>/OppType', formatter: '.formatter.getWorkpackage' }">
-						<VBox  class="">
-							<Table inset="true" items="{oModelEstCal>/to_ResourceEff/results}" alternateRowColors="true">
+						<VBox>
+							<m:Table rows="{oModelEstCal>/to_ResourceEff/results}" ariaLabelledBy="title" selectionMode="None" >
+									<m:extension>
+										<OverflowToolbar style="Clear">
+											<Title  text="{i18n>tabtitle}" wrapping="true"/>
+										</OverflowToolbar>
+									</m:extension>
+									<m:columns class="sapUiSmallMarginTop">
+										<m:Column width="7rem">
+											<Label text="Skill" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>EffType'}" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Level" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>EcLevel'}" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 1" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec1', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 2" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec2', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 3" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec3', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 4" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec4', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 5" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec5', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 6" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec6', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 7" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec7', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 8" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec8', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 9" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec9', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 10" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec10', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 11" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec11', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Month 12" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>Ec12', formatter: '.formatter.convertTwoDecimal' }" />
+											</m:template>
+										</m:Column>
+										<m:Column>
+											<Label text="Sum" />
+											<m:template>
+												<Text text="{path: 'oModelEstCal>EcSum', formatter: '.formatter.convertTwoDecimal' }" class="bldTxtChld" />
+											</m:template>
+										</m:Column>
+
+									</m:columns>
+								</m:Table>
+							<!-- <Table inset="true" items="{oModelEstCal>/to_ResourceEff/results}" alternateRowColors="true">
 								<headerToolbar>
 									<OverflowToolbar>
 										<content>
@@ -174,7 +274,6 @@
 									</OverflowToolbar>
 								</headerToolbar>
 								<columns>
-									
 									<Column hAlign="Begin" width="7rem" >
 										<Label design="Bold" text="Skill"  />
 									</Column>
@@ -243,7 +342,7 @@
 										</cells>
 									</ColumnListItem>
 								</items>
-							</Table>
+							</Table> -->
 						</VBox>
 					</IconTabFilter>
 					<IconTabFilter text="Work Package Additional Details">
@@ -265,7 +364,7 @@
 									<!-- Column:Execution:L3/L2 -->
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="Execution: L3/L2" textAlign="Center"/>
+											<Label text="Execution: L3/L2" textAlign="Center" wrapping="true"/>
 											<Label text="Small" textAlign="Begin" />
 										</m:multiLabels>
 										<m:template>
@@ -274,7 +373,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }" >
 										<m:multiLabels>
-											<Label text="Execution: L3/L2" textAlign="Center" />
+											<Label text="Execution: L3/L2" textAlign="Center" wrapping="true"/>
 											<Label text="Medium" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -283,7 +382,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }" >
 										<m:multiLabels>
-											<Label text="Execution: L3/L2" textAlign="Center"/>
+											<Label text="Execution: L3/L2" textAlign="Center" wrapping="true"/>
 											<Label text="Large" textAlign="Center"/>
 										</m:multiLabels>
 										<m:template>
@@ -293,7 +392,7 @@
 									<!-- Column:Coverage L4 Effort -->
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="Coverage L4 Effort" textAlign="Center"/>
+											<Label text="Coverage L4 Effort" textAlign="Center" wrapping="true"/>
 											<Label text="Small" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -302,7 +401,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }">
 										<m:multiLabels>
-											<Label text="Coverage L4 Effort"/>
+											<Label text="Coverage L4 Effort" wrapping="true"/>
 											<Label text="Medium" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -311,7 +410,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }">
 										<m:multiLabels>
-											<Label text="Coverage L4 Effort"/>
+											<Label text="Coverage L4 Effort" wrapping="true"/>
 											<Label text="Large" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -321,7 +420,7 @@
 									<!-- Column:Hyper Care Effort L2 -->
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="Hyper Care Effort L2" textAlign="Center" />
+											<Label text="Hyper Care Effort L2" textAlign="Center" wrapping="true" />
 											<Label text="Small" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -330,7 +429,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }">
 										<m:multiLabels>
-											<Label text="Hyper Care Effort L2"/>
+											<Label text="Hyper Care Effort L2" wrapping="true"/>
 											<Label text="Medium" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -339,7 +438,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }">
 										<m:multiLabels>
-											<Label text="Hyper Care Effort L2"/>
+											<Label text="Hyper Care Effort L2" wrapping="true"/>
 											<Label text="Large" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -349,7 +448,7 @@
 									<!-- Column:governance -->
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="Governance" textAlign="Center" />
+											<Label text="Governance" textAlign="Center" wrapping="true"/>
 											<Label text="Small" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -358,7 +457,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }">
 										<m:multiLabels>
-											<Label text="Governance"/>
+											<Label text="Governance" wrapping="true"/>
 											<Label text="Medium" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -367,7 +466,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }">
 										<m:multiLabels>
-											<Label text="Governance"/>
+											<Label text="Governance" wrapping="true"/>
 											<Label text="Large" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -377,7 +476,7 @@
 									<!-- Column:Total -->
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'S' ? true : false }">
 										<m:multiLabels>
-											<Label text="TOTAL" textAlign="Center"/>
+											<Label text="TOTAL" textAlign="Center" wrapping="true"/>
 											<Label text="Small" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>
@@ -386,7 +485,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'M' ? true : false }">
 										<m:multiLabels>
-											<Label text="TOTAL"/>
+											<Label text="TOTAL" wrapping="true"/>
 											<Label text="Medium" />
 										</m:multiLabels>
 										<m:template>
@@ -395,7 +494,7 @@
 									</m:Column>
 									<m:Column hAlign="Center" visible="{= ${oModelEstCal>/SystemSize} === 'L' ? true : false }">
 										<m:multiLabels>
-											<Label text="TOTAL"/>
+											<Label text="TOTAL" wrapping="true"/>
 											<Label text="Large" textAlign="Center" />
 										</m:multiLabels>
 										<m:template>

@@ -1,6 +1,5 @@
 sap.ui.define([
 	"./BaseController",
-	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/library",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
@@ -11,7 +10,7 @@ sap.ui.define([
 	"sap/m/ColumnListItem",
 	"sap/m/Column"
 ],
-	function (BaseController, JSONModel, CoreLib, Filter, FilterOperator, SearchField, Column, Label, Text, ColumnListItem) {
+	function (BaseController, CoreLib, Filter, FilterOperator, SearchField, Column, Label, Text, ColumnListItem) {
 		"use strict";
 		const { BusyIndicator } = CoreLib;
 		return BaseController.extend("com.zeffortcalculatorhcl.controller.Search", {
@@ -164,56 +163,28 @@ sap.ui.define([
 							// For Mobile the default table is sap.m.Table
 							if (oTable.bindItems) {
 								// Bind items to the ODataModel and add columns
-								let oColModel = new JSONModel();
-								oColModel.setData({
-									cols: [
-										{ label: "Opportunity ID", template: "OpportunityId" },
-										{ label: "Customer ID", template: "CustId" },
-										{ label: "Customer Name", template: "CustName" , demandPopin: true },
-										{ label: "Created By", template: "UserAlias" , demandPopin: true },
-										{ label: "Created On", template: "LastChangedOn" , demandPopin: true}
-									]
+								oTable.bindAggregation("items", {
+									path: "/custValueHelp",
+									template: new ColumnListItem({
+										cells: [new Label({ text: "{OpportunityId}" }), new Label({ text: "{CustId}" }), new Label({ text: "{CustName}" }), new Label({ text: "{UserAlias}" }), new Label({ text: { path: 'LastChangedOn', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd,yyyy' } } })]
+									}),
+									events: {
+										dataReceived: function () {
+											oDialog.update();
+										}
+									}
 								});
-
-								oTable.setModel(oColModel, "columns");
-
-								oTable.bindAggregation("items", "/custValueHelp", function (sId, oContext) {
-									let aCols = oTable.getModel("columns").getData().cols;
-			
-									return new ColumnListItem({
-										cells: aCols.map(function (column) {
-											let colname = column.template;
-											if (colname == "LastChangedOn"){
-												return new Label({ text: { path: 'LastChangedOn', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd,yyyy' } } })
-											}
-											return new Label({ text: "{" + colname + "}" });
-										})
-									});
-								});
-
-								// oTable.bindAggregation("items", {
-								// 	path: "/custValueHelp",
-								// 	template: new ColumnListItem({
-								// 		// cells: [new Label({ text: "{OpportunityId}" }), new Label({ text: "{CustId}" }), new Label({ text: "{CustName}" }), new Label({ text: "{UserAlias}" }), new Label({ text: { path: 'LastChangedOn', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd,yyyy' } } })]
-								// 		cells: [new Label({ text: "{OpportunityId}" })]
-								// 	}),
-								// 	events: {
-								// 		dataReceived: function () {
-								// 			oDialog.update();
-								// 		}
-								// 	}
-								// });
-								//oTable.addColumn(new Column({ header: new Label({ text: "Opportunity ID" }) }));
-								// oTable.addColumn(new Column({ header: new Label({ text: "Customer ID" }) }));
-								// oTable.addColumn(new Column(
-								// 	{ header: new Label({ text: "Customer Name" }), demandPopin: true, minScreenWidth: "Desktop" }
-								// ));
-								// oTable.addColumn(new Column(
-								// 	{ header: new Label({ text: "Created By" }), demandPopin: true, minScreenWidth: "Desktop" }
-								// ));
-								// oTable.addColumn(new Column(
-								// 	{ header: new Label({ text: "Created On" }), demandPopin: true, minScreenWidth: "Desktop" }
-								// ));
+								oTable.addColumn(new Column({ header: new Label({ text: "Opportunity ID" }) }));
+								oTable.addColumn(new Column({ header: new Label({ text: "Customer ID" }) }));
+								oTable.addColumn(new Column(
+									{ header: new Label({ text: "Customer Name" }), demandPopin: true, minScreenWidth: "Desktop" }
+								));
+								oTable.addColumn(new Column(
+									{ header: new Label({ text: "Created By" }), demandPopin: true, minScreenWidth: "Desktop" }
+								));
+								oTable.addColumn(new Column(
+									{ header: new Label({ text: "Created On" }), demandPopin: true, minScreenWidth: "Desktop" }
+								));
 							}
 							oDialog.update();
 						}.bind(this));

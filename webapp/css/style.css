@@ -15,6 +15,10 @@
     font-weight: bold;
     font-size:.9rem;
 }
+
+.rbH span span , .rbM span span{
+    font-family: "72", "72full", Arial, Helvetica, sans-serif;
+}
  
 
 

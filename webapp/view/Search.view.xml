@@ -52,15 +52,15 @@
 					</infoToolbar>					 -->
 					<columns>
 						<Column >
-							<Label design="Bold" text="Customer ID"  />
+							<Label design="Bold" text="Customer ID" wrapping="true" />
 						</Column>
 						<Column>
-							<Label design="Bold" text="Opportunity ID" />
+							<Label design="Bold" text="Opportunity ID" wrapping="true"/>
 						</Column>
 						<Column hAlign="Left" >
-							<Label design="Bold" text="Version" />
+							<Label design="Bold" text="Version" textAlign="End"/>
 						</Column>
-						<Column hAlign="Left" >
+						<Column minScreenWidth="Desktop" demandPopin="true"	hAlign="Left">
 							<Label design="Bold" text="Price" />
 						</Column>
 						<Column	minScreenWidth="Desktop" demandPopin="true"	hAlign="Left"  >
@@ -79,7 +79,7 @@
 								
 								<ObjectIdentifier title="{CustId}" />
 								<Text text="{OpportunityId}" />
-								<Text text="{Version}" textAlign="Left"/>
+								<Text text="{Version}" textAlign="End"/>
 								<Text text="{SrvcCst} {Currency}" textAlign="Left"/>
 								<Text text="{Comments}" textAlign="Left" />
 								<Text text="{UserAlias}" textAlign="Left" />

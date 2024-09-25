@@ -33,7 +33,7 @@
     "crossNavigation": {
       "inbounds": {
         "PricingCalculator": {
-          "semanticObject": "PricingCalculator",
+          "semanticObject": "PricingCalculatorInt",
           "action": "Display",
           "title": "{{flpTitle}}",
           "subTitle": "Internal",
